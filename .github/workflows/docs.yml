@@ -26,5 +26,5 @@ jobs:
           globs: "**/*.md"
       - uses: lycheeverse/lychee-action@v2
         with:
-          args: --verbose --no-progress "**/*.md"
+          args: --verbose --no-progress --exclude "https://github.com/users/danielpf30/projects/1" "**/*.md"
           fail: true
