@@ -1,15 +1,23 @@
 # Requisitos
 
-> **Importante:** o PDF original ainda precisa ser fornecido pela equipe. Os
-> arquivos abaixo são a estrutura de publicação; os textos normativos devem ser
-> transcritos do PDF, sem criação de requisitos por inferência.
+Documentação Markdown transcrita do documento normativo
+`Requisitos-ExtensopediaV1.pdf`, versão 1.0, outubro de 2026.
 
 ## Versão publicada
 
-- [Introdução](01-introducao.md)
+- [Introdução e descrição geral](01-introducao.md)
 - [Requisitos funcionais](02-requisitos-funcionais.md)
 - [Requisitos não funcionais](03-requisitos-nao-funcionais.md)
 - [Changelog](CHANGELOG.md)
 
-Quando o PDF estiver disponível, ele deve ser salvo nesta pasta como
-`requisitos-v1.0.pdf` e conferido contra todos os IDs RF001–RF010 e NF001–NF011.
+## Convenções
+
+Os requisitos funcionais são identificados como `RF001`–`RF010` e os requisitos
+não funcionais como `NF001`–`NF011`. As prioridades são:
+
+- **Essencial:** imprescindível para o funcionamento do sistema.
+- **Importante:** necessário para uma implantação satisfatória, mas não bloqueia
+  o funcionamento básico.
+- **Desejável:** pode ser postergado sem comprometer as funcionalidades básicas.
+
+A fonte normativa permanece versionada junto desta transcrição para conferência.
