@@ -24,6 +24,7 @@ Formato comum: `id smallint PK identity`, `codigo varchar(40) UNIQUE NOT NULL`, 
 ## 2. Localidades
 
 ### estados
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | smallint | N | PK |
@@ -31,6 +32,7 @@ Formato comum: `id smallint PK identity`, `codigo varchar(40) UNIQUE NOT NULL`, 
 | nome | varchar(60) | N | Nome do estado |
 
 ### cidades
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | int | N | PK |
@@ -43,6 +45,7 @@ Formato comum: `id smallint PK identity`, `codigo varchar(40) UNIQUE NOT NULL`, 
 ## 3. Usuários e autenticação (RF001, RF010)
 
 ### usuarios
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -56,6 +59,7 @@ Formato comum: `id smallint PK identity`, `codigo varchar(40) UNIQUE NOT NULL`, 
 | criado_em / atualizado_em | timestamptz | N | Auditoria básica |
 
 ### tokens_redefinicao_senha
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -67,6 +71,7 @@ Formato comum: `id smallint PK identity`, `codigo varchar(40) UNIQUE NOT NULL`, 
 ## 4. Escolas (RF005)
 
 ### escolas
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -86,6 +91,7 @@ Formato comum: `id smallint PK identity`, `codigo varchar(40) UNIQUE NOT NULL`, 
 ## 5. Demandas (RF006, RF008)
 
 ### demandas
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK. É o "identificador da demanda" exibido ao gestor |
@@ -112,6 +118,7 @@ Formato comum: `id smallint PK identity`, `codigo varchar(40) UNIQUE NOT NULL`, 
 Regras: `CHECK (status em Pendente → assumida_por IS NULL)`; `concluida_em >= assumida_em`.
 
 ### anexos_demanda
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -122,6 +129,7 @@ Regras: `CHECK (status em Pendente → assumida_por IS NULL)`; `concluida_em >= 
 | caminho | varchar(500) | N | Caminho no armazenamento (arquivo fora do banco) |
 
 ### mensagens (interação, RF008)
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -131,6 +139,7 @@ Regras: `CHECK (status em Pendente → assumida_por IS NULL)`; `concluida_em >= 
 | criado_em | timestamptz | N | Data de envio |
 
 ### reunioes (agendamento, RF008)
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -144,6 +153,7 @@ Regras: `CHECK (status em Pendente → assumida_por IS NULL)`; `concluida_em >= 
 ## 6. Projetos (RF003, RF004, RF009)
 
 ### projetos
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -168,6 +178,7 @@ Regras: `CHECK (status em Pendente → assumida_por IS NULL)`; `concluida_em >= 
 | publicado_em | timestamptz | S | Preenchido ao virar Ativo |
 
 ### projeto_colaboradores
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -179,6 +190,7 @@ Regras: `CHECK (status em Pendente → assumida_por IS NULL)`; `concluida_em >= 
 `UNIQUE (projeto_id, usuario_id)` quando `usuario_id` não é nulo.
 
 ### cronograma_atividades
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -188,6 +200,7 @@ Regras: `CHECK (status em Pendente → assumida_por IS NULL)`; `concluida_em >= 
 | data_fim | date | N | `CHECK (data_fim >= data_inicio)` (RF009: cronologia inválida) |
 
 ### itens_orcamento
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -204,6 +217,7 @@ O total geral do projeto é calculado com `SUM(valor_total)` (não é armazenado
 ## 7. Candidaturas (RF007)
 
 ### candidaturas
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -217,6 +231,7 @@ O total geral do projeto é calculado com `SUM(valor_total)` (não é armazenado
 ## 8. Apoio, relatórios e administração (RF008, RF010)
 
 ### feedbacks
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -229,6 +244,7 @@ O total geral do projeto é calculado com `SUM(valor_total)` (não é armazenado
 `CHECK (num_nonnulls(demanda_id, projeto_id) = 1)`. **A confirmar com a equipe.**
 
 ### notificacoes
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
@@ -241,6 +257,7 @@ O total geral do projeto é calculado com `SUM(valor_total)` (não é armazenado
 | lida_em | timestamptz | S | Nulo = não lida |
 
 ### configuracoes
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | chave | varchar(80) | N | PK. Ex.: `politica_privacidade`, `termos_uso` |
@@ -249,6 +266,7 @@ O total geral do projeto é calculado com `SUM(valor_total)` (não é armazenado
 | atualizado_em | timestamptz | N | Data da alteração |
 
 ### audit_log
+
 | Coluna | Tipo | Nulo? | Descrição / regra |
 |---|---|---|---|
 | id | bigint | N | PK |
