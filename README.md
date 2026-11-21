@@ -25,6 +25,7 @@ scripts/    Automação e manutenção
 - [Glossário e personas](docs/glossario.md)
 - [Matriz de rastreabilidade](docs/rastreabilidade.md)
 - [Diagramas](docs/diagramas/README.md)
+- [Infraestrutura](infra/README.md)
 
 ## Como contribuir
 
@@ -40,4 +41,38 @@ backend, frontend, autenticação e implantação.
 
 ## Como subir o ambiente
 
-Será preenchido na Sprint 2, quando a stack e os serviços forem aprovados.
+### Banco de dados (PostgreSQL)
+
+Para iniciar o banco de dados localmente via Docker Compose:
+
+```bash
+docker compose -f infra/docker-compose.yml up -d
+# ou usando o Makefile:
+make db-up
+```
+
+Para verificar o status e integridade (*healthcheck*):
+
+```bash
+docker compose -f infra/docker-compose.yml ps
+# ou:
+make db-status
+```
+
+Para parar o banco de dados:
+
+```bash
+docker compose -f infra/docker-compose.yml down
+# ou:
+make db-down
+```
+
+Para resetar o banco de dados (apagando os volumes persistidos e recriando):
+
+```bash
+docker compose -f infra/docker-compose.yml down -v && docker compose -f infra/docker-compose.yml up -d
+# ou:
+make db-reset
+```
+
+Instruções detalhadas e opções de customização estão descritas em [infra/README.md](infra/README.md).

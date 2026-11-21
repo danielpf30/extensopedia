@@ -1,0 +1,36 @@
+name: extensopedia
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: extensopedia-postgres
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-extensopedia}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-extensopedia}
+      POSTGRES_DB: ${POSTGRES_DB:-extensopedia}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - extensopedia-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-extensopedia} -d ${POSTGRES_DB:-extensopedia}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  postgres_data:
+    name: extensopedia_postgres_data
+
+networks:
+  extensopedia-network:
+    name: extensopedia-network
+    driver: bridge
