@@ -13,6 +13,7 @@ O ambiente de desenvolvimento local utiliza o Docker Compose para provisionar os
   - Porta mapeada exclusivamente em loopback (`127.0.0.1:5432:5432`).
   - Autenticação e hash de senhas configurados com `scram-sha-256` (NF010, NF011).
   - Inicialização automática de papéis com privilégio mínimo (`infra/db/init/01-init-roles.sh`).
+  - Inicialização automática dos bancos e extensões (`infra/db/init/02-init-databases.sh`).
   - Persistência com volume nomeado (`extensopedia_postgres_data`).
   - Rede dedicada bridge (`extensopedia-network`).
   - Política de reinicialização (`restart: unless-stopped`).
@@ -42,6 +43,7 @@ O comando copia a estrutura de `infra/.env.example` para `infra/.env` e substitu
 |---|---|---|---|
 | `POSTGRES_PORT` | Rede | — | Porta no host (`127.0.0.1`) |
 | `POSTGRES_DB` | Banco | — | Nome do banco de dados |
+| `POSTGRES_TEST_DB` | Banco | — | Nome do banco de dados usado pelos testes |
 | `POSTGRES_USER` | Admin / Superuser | `SUPERUSER` | Conta administrativa do container |
 | `POSTGRES_PASSWORD` | Admin / Superuser | — | Senha administrativa |
 | `DB_MIGRATION_USER` | Dono / Migrations | DDL + DML | Dono do banco e schema `public` |

@@ -13,12 +13,32 @@ O PostgreSQL é executado via Docker Compose a partir do arquivo [`../docker-com
 - **Volume nomeado:** `extensopedia_postgres_data` montado em `/var/lib/postgresql/data`.
 - **Healthcheck:** Avaliado via comando `pg_isready`.
 - **Rede:** `extensopedia-network`.
+- **Bancos:** `extensopedia` para desenvolvimento e `extensopedia_test` para testes.
+- **Encoding:** UTF-8.
+- **Timezone:** UTC no PostgreSQL; o fuso horario exibido pela aplicacao deve ser `America/Fortaleza`.
+- **Collation:** colacao brasileira `pt_BR` baseada em ICU, alem do locale UTF-8 do cluster.
+- **Extensoes:** `citext`, `unaccent`, `pg_trgm` e `pgcrypto`.
 
 ## Papéis do Banco
 
 - **Admin (`POSTGRES_USER`):** Gerenciamento do container.
 - **Migrations (`DB_MIGRATION_USER`):** Dono do banco e do schema `public`, com permissão DDL para criar/alterar tabelas.
 - **Aplicação (`DB_APP_USER`):** Permissões estritamente DML (`SELECT`, `INSERT`, `UPDATE`, `DELETE`) e `USAGE` em sequences. Bloqueado para DDL.
+
+## Validacao dos bancos
+
+Após recriar o volume, conecte-se ao banco principal ou de testes e execute:
+
+```sql
+SELECT extname
+FROM pg_extension
+WHERE extname IN ('citext', 'unaccent', 'pg_trgm', 'pgcrypto')
+ORDER BY extname;
+
+SELECT unaccent('Ação') AS sem_acento;
+
+SELECT 'Extensopedia'::citext = 'extensopedia'::citext AS sem_diferenca_de_caixa;
+```
 
 ## Comandos rápidos
 
