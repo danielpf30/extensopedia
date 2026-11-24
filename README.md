@@ -41,6 +41,16 @@ backend, frontend, autenticação e implantação.
 
 ## Como subir o ambiente
 
+### Configuração de variáveis e segredos
+
+Antes de iniciar os serviços pela primeira vez, gere o arquivo de variáveis de ambiente com senhas fortes criptograficamente:
+
+```bash
+make generate-secrets
+# ou:
+python scripts/generate-passwords.py --env-file infra/.env
+```
+
 ### Banco de dados (PostgreSQL)
 
 Para iniciar o banco de dados localmente via Docker Compose:

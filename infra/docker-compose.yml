@@ -5,22 +5,35 @@ services:
     image: postgres:16-alpine
     container_name: extensopedia-postgres
     restart: unless-stopped
+    command:
+      - "postgres"
+      - "-c"
+      - "password_encryption=scram-sha-256"
+      - "-c"
+      - "timezone=UTC"
     env_file:
       - path: .env
         required: false
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-extensopedia}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-extensopedia}
+      POSTGRES_USER: ${POSTGRES_USER:-extensopedia_admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-extensopedia_admin_pass}
       POSTGRES_DB: ${POSTGRES_DB:-extensopedia}
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256 --auth-local=scram-sha-256 --encoding=UTF8 --locale=C.UTF-8"
+      POSTGRES_TEST_DB: ${POSTGRES_TEST_DB:-extensopedia_test}
+      DB_MIGRATION_USER: ${DB_MIGRATION_USER:-extensopedia_owner}
+      DB_MIGRATION_PASSWORD: ${DB_MIGRATION_PASSWORD:-extensopedia_owner_pass}
+      DB_APP_USER: ${DB_APP_USER:-extensopedia_app}
+      DB_APP_PASSWORD: ${DB_APP_PASSWORD:-extensopedia_app_pass}
       PGDATA: /var/lib/postgresql/data/pgdata
     ports:
       - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
     networks:
       - extensopedia-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-extensopedia} -d ${POSTGRES_DB:-extensopedia}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-extensopedia_admin} -d ${POSTGRES_DB:-extensopedia}"]
       interval: 5s
       timeout: 5s
       retries: 5

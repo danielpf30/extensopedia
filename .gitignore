@@ -1,10 +1,16 @@
 # Ambiente e segredos
 .env
 .env.*
+*.env
+*.env.*
 infra/.env
 infra/.env.*
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
 !.env.example
-!infra/.env.example
+!**/.env.example
 
 # IDE
 .idea/
