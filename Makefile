@@ -35,3 +35,5 @@ db-logs:
 db-reset:
 	docker compose -f infra/docker-compose.yml down -v
 	docker compose -f infra/docker-compose.yml up -d
+
+include infra/db/migrations.mk
